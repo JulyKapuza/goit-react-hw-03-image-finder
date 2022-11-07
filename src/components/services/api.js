@@ -5,7 +5,7 @@ const URL = 'https://pixabay.com/api/';
 
 async function fetchImages(name, page) {
   return await axios(
-    `${URL}?q=${name}&page=1&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12&page=${page}`
+    `${URL}?q=${name}&page=${page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
   );
 }
 
