@@ -18,7 +18,7 @@ class App extends Component {
     totalPages: 0,
     showModal: false,
     largeImage: '',
-    isLoading: true,
+    isLoading: false,
   };
 
   async componentDidUpdate(prevProps, prevState) {
@@ -38,11 +38,22 @@ class App extends Component {
         this.setState({ images: [] });
         return;
       }
-      return this.setState(({ images }) => ({
-        images: [...images, ...response.data.hits],
-        totalPages: Math.ceil(response.data.totalHits / 12),
-        isLoading: false,
-      }));
+
+      response.data.hits.forEach(
+        ({ id, webformatURL, largeImageURL, tags }) => {
+          return this.setState(({ images }) => ({
+            images: [...images, { id, webformatURL, largeImageURL, tags }],
+            totalPages: Math.ceil(response.data.totalHits / 12),
+            isLoading: false,
+          }));
+        }
+      );
+
+      // return this.setState(({ images }) => ({
+      //   images: [...images, ...response.data.hits],
+      //   totalPages: Math.ceil(response.data.totalHits / 12),
+      //   isLoading: false,
+      // }));
     }
   }
 
@@ -77,7 +88,7 @@ class App extends Component {
       <div className="container">
         {<Searchbar onSubmit={this.handleFormSubmit} />}
 
-        {
+        {images.length > 0 && (
           <ImageGallery
             images={images}
             onClick={this.onClick}
@@ -86,7 +97,7 @@ class App extends Component {
             onLoadMore={this.onLoadMore}
             isLoading={isLoading}
           />
-        }
+        )}
 
         {isLoading && <MyLoader />}
         {images.length >= 12 && totalPages > page && (

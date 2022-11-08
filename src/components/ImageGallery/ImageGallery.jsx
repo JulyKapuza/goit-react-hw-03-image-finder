@@ -5,19 +5,17 @@ import css from './ImageGallery.module.css';
 const ImageGallery = ({ images, onClick }) => {
   return (
     <div className={css.App}>
-      {images.length > 0 && (
-        <ul className={css.ImageGallery}>
-          {images.map(({ id, webformatURL, tags, largeImageURL }) => (
-            <ImageGalleryItem
-              key={id}
-              webformatURL={webformatURL}
-              largeImg={largeImageURL}
-              tags={tags}
-              onClick={onClick}
-            ></ImageGalleryItem>
-          ))}
-        </ul>
-      )}
+      <ul className={css.ImageGallery}>
+        {images.map(({ id, webformatURL, tags, largeImageURL }) => (
+          <ImageGalleryItem
+            key={id}
+            webformatURL={webformatURL}
+            largeImg={largeImageURL}
+            tags={tags}
+            onClick={onClick}
+          ></ImageGalleryItem>
+        ))}
+      </ul>
     </div>
   );
 };
